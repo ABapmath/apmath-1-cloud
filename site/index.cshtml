@@ -26,7 +26,7 @@ else{
 		for(int j=0;j<n;j++)
 		{
 			double t;
-            A[i * n + j] = rng.NextDouble() * 20.0;
+           	A[i * n + j] = rng.NextDouble() * 20.0;
 		}
 
     var count = 1;
@@ -60,8 +60,9 @@ else{
 
     while (count < iter)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < n; j++){
             _y[count, j] = ky[j] / (double)count;
+	   }
         for (int i = 0; i < m; i++)
         {
             double sum_x = 0;
@@ -85,8 +86,9 @@ else{
         }
 
 
-        for (int i = 0; i < m; i++)
+        for (int i = 0; i < m; i++){
             _x[count, i] = kx[i] / (double)count;
+	   }
         for (int j = 0; j < n; j++)
         {
             double sum_y = 0;
@@ -111,25 +113,26 @@ else{
         }
 
         v[count] = 0;
-        for (int i = 0; i < m; i++)
-            for (int j = 0; j < n; j++)
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
                 v[count] += A[i * n + j] * _y[count, j] * _x[count, i];
-
+		 }
+	   }
         count++;
         kx[x]++;
         ky[y]++;
     }
 
     var resx = new double[m];
-    for (int i = 0; i < m; i++)
-        resx[i] = kx[i] / (double)count;
+    for (int i = 0; i < m; i++){
+        resx[i] = kx[i] / (double)count;}
     var resy = new double[n];
-    for (int j = 0; j < n; j++)
-        resy[j] = ky[j] / (double)count;
+    for (int j = 0; j < n; j++){
+        resy[j] = ky[j] / (double)count;}
     double resv = 0;
-    for (int i = 0; i < m; i++)
-        for (int j = 0; j < n; j++)
-            resv += A[i * n + j] * resy[j] * resx[i];
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            resv += A[i * n + j] * resy[j] * resx[i];}}
 }
 </script>
 </body>
