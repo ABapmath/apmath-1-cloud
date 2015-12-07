@@ -22,12 +22,13 @@ else{
     var m=3;
     Random rng = new Random(seed);
 	var A = new double[m*n];
-	for(int i=0;i<m;i++)
+	for(int i=0;i<m;i++){
 		for(int j=0;j<n;j++)
 		{
 			double t;
            	A[i * n + j] = rng.NextDouble() * 20.0;
 		}
+	}
 
     var count = 1;
 
