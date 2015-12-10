@@ -9,10 +9,15 @@
 <html>
 <head>
   <meta charset="utf-8">
-
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+  </script>
   <title>Braun-Robinson</title>
 </head>
 <body>
+<script type="text/javascript">
 @if(!clear){
 	Response.Write(String.Format("alert({0});", errorMssage));
 }
@@ -20,12 +25,12 @@ else{
     var n=3;
     var m=3;
     Random rng = new Random(seed);
-	var A = new double[m*n];
+	var A = new double[m][n];
 	for(int i=0;i<m;i++){
 		for(int j=0;j<n;j++)
 		{
 			double t;
-           	A[i * n + j] = rng.NextDouble() * 20.0;
+           	A[i][j] = rng.NextDouble() * 20.0;
 		}
 	}
 
@@ -40,7 +45,7 @@ else{
     var _x = new double[iter, m];
     var _y = new double[iter, n];
     var v = new double[iter];
-    v[0] = A[0];
+    v[0] = A[0][0];
 
     kx[0] = 1;
     _x[0, 0] = 1;
@@ -66,10 +71,9 @@ else{
         for (int i = 0; i < m; i++)
         {
             double sum_x = 0;
-            int _i = i * n;
             for (int j = 0; j < n; j++)
             {
-                sum_x += A[_i + j] * _y[count, j];
+                sum_x += A[i][j] * _y[count, j];
             }
             max_x[i] = sum_x;
         }
@@ -92,10 +96,9 @@ else{
         for (int j = 0; j < n; j++)
         {
             double sum_y = 0;
-            int _j = j * m;
             for (int i = 0; i < m; i++)
             {
-                sum_y += A[i + _j] * _x[count, i];
+                sum_y += A[i][j] * _x[count, i];
             }
             min_y[j] = sum_y;
         }
@@ -115,7 +118,7 @@ else{
         v[count] = 0;
         for (int i = 0; i < m; i++){
             for (int j = 0; j < n; j++){
-                v[count] += A[i * n + j] * _y[count, j] * _x[count, i];
+                v[count] += A[i][j] * _y[count, j] * _x[count, i];
 		 }
 	   }
         count++;
@@ -132,42 +135,18 @@ else{
     double resv = 0;
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
-            resv += A[i * n + j] * resy[j] * resx[i];}}
+            resv += A[i][j] * resy[j] * resx[i];}}
 }
-<table border="1">
-<tr>
-<td>@A[0].ToString()</td>
-<td>@A[1]</td>
-<td>@A[2]</td>
-</tr>
-<tr>
-<td>@A[3]</td>
-<td>@A[4]</td>
-<td>@A[5]</td>
-</tr>
-<tr>
-<td>@A[6]</td>
-<td>@A[7]</td>
-<td>@A[8]</td>
-</tr>
-</table>
-<ls>
-<table border="1">
-<tr>
-<td>@resx[0]</td>
-<td>@resx[1]</td>
-<td>@resx[2]</td>
-</tr>
-<tr>
-<td>@resy[0]</td>
-<td>@resy[1]</td>
-<td>@resy[2]</td>
-</tr>
-<tr>
-<td></td>
-<td>@resv</td>
-<td></td>
-</tr>
-</table>
+</script>
+<TABLE BORDER>
+    @foreach(var str in A)
+    {
+    <TR>
+        @foreach(var x in str)
+        {<TD>x</TD>}
+    </TR>
+    }
+</TABLE>
+
 </body>
 </html>
