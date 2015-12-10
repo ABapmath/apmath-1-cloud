@@ -21,7 +21,7 @@
 @if(!clear){
 	Response.Write(String.Format("alert({0});", errorMssage));
 }
-else{
+@{
     var n=3;
     var m=3;
     Random rng = new Random(seed);
@@ -136,7 +136,6 @@ else{
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
             resv += A[i, j] * resy[j] * resx[i];}}
-    ViewContext.Controller.ViewBag.A_ = A;
 }
 </script>
 <TABLE BORDER>
@@ -145,7 +144,7 @@ else{
         <TR>
         @for(var j = 0; j < 3; j++)
         {
-            string temp = ViewContext.Controller.ViewBag.A_[i, j];
+            string temp = A[i, j];
             <TD>@temp</TD>
         }
         </TR>
