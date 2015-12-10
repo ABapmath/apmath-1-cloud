@@ -136,6 +136,7 @@ else{
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
             resv += A[i, j] * resy[j] * resx[i];}}
+    ViewContext.Controller.ViewBag.A_ = A;
 }
 </script>
 <TABLE BORDER>
@@ -144,7 +145,7 @@ else{
         <TR>
         @for(var j = 0; j < 3; j++)
         {
-            string temp = A[i, j];
+            string temp = ViewContext.Controller.ViewBag.A_[i, j];
             <TD>@temp</TD>
         }
         </TR>
