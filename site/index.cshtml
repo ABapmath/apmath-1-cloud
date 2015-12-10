@@ -30,7 +30,7 @@ else{
 		for(int j=0;j<n;j++)
 		{
 			double t;
-           	A[i*n + j] = rng.NextDouble() * 20.0;
+           	A[i, j] = rng.NextDouble() * 20.0;
 		}
 	}
 
@@ -45,7 +45,7 @@ else{
     var _x = new double[iter, m];
     var _y = new double[iter, n];
     var v = new double[iter];
-    v[0] = A[0];
+    v[0] = A[0, 0];
 
     kx[0] = 1;
     _x[0, 0] = 1;
@@ -71,10 +71,9 @@ else{
         for (int i = 0; i < m; i++)
         {
             double sum_x = 0;
-            i_ = i*n;
             for (int j = 0; j < n; j++)
             {
-                sum_x += A[i_ + j] * _y[count, j];
+                sum_x += A[i, j] * _y[count, j];
             }
             max_x[i] = sum_x;
         }
@@ -97,10 +96,9 @@ else{
         for (int j = 0; j < n; j++)
         {
             double sum_y = 0;
-            j_ = j*m;
             for (int i = 0; i < m; i++)
             {
-                sum_y += A[i + j_] * _x[count, i];
+                sum_y += A[i, j] * _x[count, i];
             }
             min_y[j] = sum_y;
         }
@@ -120,7 +118,7 @@ else{
         v[count] = 0;
         for (int i = 0; i < m; i++){
             for (int j = 0; j < n; j++){
-                v[count] += A[i*n + j] * _y[count, j] * _x[count, i];
+                v[count] += A[i, j] * _y[count, j] * _x[count, i];
 		 }
 	   }
         count++;
@@ -137,15 +135,19 @@ else{
     double resv = 0;
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
-            resv += A[i*n + j] * resy[j] * resx[i];}}
+            resv += A[i, j] * resy[j] * resx[i];}}
 }
 </script>
 <TABLE BORDER>
-    @foreach(var x in A)
+    @for(var i = 0; i < 3; i++)
     {
-    <TR>
-        <TD>x</TD>
-    </TR>
+        <TR>
+        @for(var j = 0; j < 3; j++)
+        {
+            string temp = A[i, j]
+            <TD>@temp</TD>
+        }
+        </TR>
     }
 </TABLE>
 
