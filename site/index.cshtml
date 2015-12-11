@@ -42,9 +42,9 @@
     var kx = new int[m];
     var ky = new int[n];
 
-    var _x = new double[iter, m];
-    var _y = new double[iter, n];
-    var v = new double[iter];
+    var _x = new double[iter + 1, m];
+    var _y = new double[iter + 1, n];
+    var v = new double[iter + 1];
     v[0] = A[0, 0];
 
     kx[0] = 1;
@@ -105,7 +105,6 @@
 
         int y = 0;
         double min = min_y[0];
-        double Vmax = min_y[0];
         for (int j = 1; j < n; j++)
         {
             if (min > min_y[j])
@@ -126,16 +125,94 @@
         ky[y]++;
     }
 
-    var resx = new double[m];
     for (int i = 0; i < m; i++){
-        resx[i] = kx[i] / (double)count;}
-    var resy = new double[n];
+        _x[count, i] = kx[i] / (double)count;}
     for (int j = 0; j < n; j++){
-        resy[j] = ky[j] / (double)count;}
-    double resv = 0;
+        _y[count, j] = ky[j] / (double)count;}
+    v[count] = 0;
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
-            resv += A[i, j] * resy[j] * resx[i];}}
+            v[count] += A[i, j] * resy[j] * resx[i];}}
+}
+function drawChart() {
+      var data_A = new google.visualization.DataTable();
+      data_A.addColumn('number', 'y1');
+      data_A.addColumn('number', 'y2');
+      data_A.addColumn('number', 'y3');
+      data_A.addRows([
+        [@A[0,0], @A[0,1], @A[0,2]],
+        [@A[1,0], @A[1,1], @A[1,2]],
+        [@A[2,0], @A[2,1], @A[2,2]]
+      ]);
+	var options_A = {'title':'Data',
+                     'width':400,
+                     'height':400};
+      var chart_A = new google.visualization.TableChart???(document.getElementById('chart_A_div'));
+      chart_A.draw(data_A, options_A);
+
+      var data_ras = new google.visualization.DataTable();
+      data_ras.addColumn('string', 'Iteration');
+      data_ras.addColumn('number', '1');
+      data_ras.addColumn('number', '2');
+      data_ras.addColumn('number', '3');
+      data_ras.addRows([
+@for(var i = 0; i < iter; i++)
+{
+    ['@i x'
+    @for(var j = 0; j < m; j++)
+    {
+        , @_x[i, j]
+    }
+    ],
+    ['@i y'
+    @for(var j = 0; j < n; j++)
+    {
+        , @_y[i, j]
+    }
+    ],
+}
+    ['@count x'
+    @for(var j = 0; j < m; j++)
+    {
+        , @_x[count, j]
+    }
+    ],
+    ['@count y'
+    @for(var j = 0; j < n; j++)
+    {
+        , @_y[count, j]
+    }
+    ]
+      ]);
+      var options_ras = {
+        width: 700,
+        height: 400,
+        legend: { position: 'top', maxLines: 1 },
+        bar: { groupWidth: '75%' },
+        isStacked: 'relative',
+      };
+      var chart_ras = new google.visualization.ColumnChart(document.getElementById("chart_ras_div"));
+      chart_ras.draw(data_ras, options_ras);
+
+      var data_vs = new google.visualization.DataTable();
+      data_vs.addColumn('number', 'Iteration');
+      data_vs.addColumn('number', 'Value');
+      data_vs.addRows([
+@for(var i = 0; i < iter; i++)
+{
+    [@i, @v[i]],
+}
+    [@count, @v[count]]
+      ]);
+      var options_vs = {
+        chart: {
+          title: 'Estimated values'
+        },
+        width: 700,
+        height: 400
+      };
+      var chart_vs = new google.charts.Line(document.getElementById("chart_vs_div"));
+      chart_vs.draw(data_vs, options_vs);
 }
 </script>
 <TABLE BORDER>
