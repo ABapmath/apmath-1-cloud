@@ -158,28 +158,24 @@ function drawChart() {
       data_ras.addRows([
 @for(var i = 0; i < iter; i++)
 {
-    <%
+    <text>
     ['@i.ToString() x'
-    %>
     @for(var j = 0; j < m; j++)
     {
-        <%
+        <text>
         , @_x[i, j]
-        %>
+        </text>
     }
-    <%
     ],
-    %>
     ['@i.ToString() y'
     @for(var j = 0; j < n; j++)
     {
-        <%
+        <text>
         , @_y[i, j]
-        %>
+        </text>
     }
-    <%
     ],
-    %>
+    </text>
 }
     ['@count.ToString() x'
     @for(var j = 0; j < m; j++)
