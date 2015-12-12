@@ -201,7 +201,7 @@ function drawChart() {
         bar: { groupWidth: '75%' },
         isStacked: 'relative',
       };
-      var chart_ras = new google.visualization.ColumnChart(document.getElementById("chart_ras_div"));
+      var chart_ras = new google.visualization.ColumnChart(document.getElementById('chart_ras_div'));
       chart_ras.draw(data_ras, options_ras);
 
       var data_vs = new google.visualization.DataTable();
@@ -223,7 +223,7 @@ function drawChart() {
         width: 700,
         height: 400
       };
-      var chart_vs = new google.charts.Line(document.getElementById("chart_vs_div"));
+      var chart_vs = new google.charts.Line(document.getElementById('chart_vs_div'));
       chart_vs.draw(data_vs, options_vs);
 }
 </script>
