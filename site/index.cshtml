@@ -132,7 +132,7 @@
     v[count] = 0;
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
-            v[count] += A[i, j] * resy[j] * resx[i];}}
+            v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
 }
 function drawChart() {
       var data_A = new google.visualization.DataTable();
