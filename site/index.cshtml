@@ -158,29 +158,43 @@ function drawChart() {
       data_ras.addRows([
 @for(var i = 0; i < iter; i++)
 {
-    <%[%>@i.ToString()+'x'
+    <%
+    ['@i.ToString() x'
+    %>
     @for(var j = 0; j < m; j++)
     {
+        <%
         , @_x[i, j]
+        %>
     }
+    <%
     ],
-    [@i.ToString()+'y'
+    %>
+    ['@i.ToString() y'
     @for(var j = 0; j < n; j++)
     {
+        <%
         , @_y[i, j]
+        %>
     }
+    <%
     ],
+    %>
 }
-    [@count.ToString()+'x'
+    ['@count.ToString() x'
     @for(var j = 0; j < m; j++)
     {
+        <%
         , @_x[count, j]
+        %>
     }
     ],
-    [@count.ToString()+'x'
+    ['@count.ToString() y'
     @for(var j = 0; j < n; j++)
     {
+        <%
         , @_y[count, j]
+        %>
     }
     ]
       ]);
@@ -200,7 +214,9 @@ function drawChart() {
       data_vs.addRows([
 @for(var i = 0; i < iter; i++)
 {
+    <%
     [@i, @v[i]],
+    %>
 }
     [@count, @v[count]]
       ]);
