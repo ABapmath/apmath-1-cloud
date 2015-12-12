@@ -12,7 +12,9 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
     google.charts.load('current', {packages: ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart1);
+    google.charts.setOnLoadCallback(drawChart2);
+    google.charts.setOnLoadCallback(drawChart3);
   </script>
   <title>Braun-Robinson</title>
 </head>
@@ -134,7 +136,7 @@
         for (int j = 0; j < n; j++){
             v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
 }
-function drawChart() {
+function drawChart1() {
       var data_A = new google.visualization.DataTable();
       data_A.addColumn('number', 'y1');
       data_A.addColumn('number', 'y2');
@@ -149,7 +151,8 @@ function drawChart() {
                      'height':400};
       var chart_A = new google.visualization.TableChart(document.getElementById('chart_A_div'));
       chart_A.draw(data_A, options_A);
-
+}
+function drawChart2() {
       var data_ras = new google.visualization.DataTable();
       data_ras.addColumn('string', 'Iteration');
       data_ras.addColumn('number', '1');
@@ -203,7 +206,8 @@ function drawChart() {
       };
       var chart_ras = new google.visualization.ColumnChart(document.getElementById('chart_ras_div'));
       chart_ras.draw(data_ras, options_ras);
-
+}
+function drawChart3() {
       var data_vs = new google.visualization.DataTable();
       data_vs.addColumn('number', 'Iteration');
       data_vs.addColumn('number', 'Value');
