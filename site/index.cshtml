@@ -147,7 +147,7 @@ function drawChart() {
 	var options_A = {'title':'Data',
                      'width':400,
                      'height':400};
-      var chart_A = new google.visualization.TableChart???(document.getElementById('chart_A_div'));
+      var chart_A = new google.visualization.TableChart(document.getElementById('chart_A_div'));
       chart_A.draw(data_A, options_A);
 
       var data_ras = new google.visualization.DataTable();
