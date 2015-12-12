@@ -4,14 +4,14 @@
 	var seed = 1;
 	var iter = 1;
 	var clear = int.TryParse(seedRequest, out seed) && int.TryParse(iterRequest, out iter);
-	var errorMssage = "no seed and/or number of iterations provided, please input http://spmath-1-cloud.azurewebsites.net?seed=5&iter=5";
+	var errorMssage = "no seed and/or number of iterations provided, please input http://apmath-1-cloud.azurewebsites.net?seed=5&iter=5";
 }
 <html>
 <head>
   <meta charset="utf-8">
   <script type="text/javascript" src="https://www.google.com/jsapi""></script>
   <script type="text/javascript">
-    google.charts.load("visualization", "1", {packages: ["corechart"]});
+    google.charts.load('visualization', '1.0', {'packages': ['corechart']});
     google.charts.setOnLoadCallback(drawChart1);
     google.charts.setOnLoadCallback(drawChart2);
     google.charts.setOnLoadCallback(drawChart3);
