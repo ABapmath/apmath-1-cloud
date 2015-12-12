@@ -180,17 +180,17 @@ function drawChart() {
     ['@count.ToString() x'
     @for(var j = 0; j < m; j++)
     {
-        <%
+        <text>
         , @_x[count, j]
-        %>
+        </text>
     }
     ],
     ['@count.ToString() y'
     @for(var j = 0; j < n; j++)
     {
-        <%
+        <text>
         , @_y[count, j]
-        %>
+        </text>
     }
     ]
       ]);
@@ -210,9 +210,9 @@ function drawChart() {
       data_vs.addRows([
 @for(var i = 0; i < iter; i++)
 {
-    <%
+    <text>
     [@i, @v[i]],
-    %>
+    </text>
 }
     [@count, @v[count]]
       ]);
