@@ -27,7 +27,8 @@
 	<text>/*</text>
 }
 @{
-    if(iter < 1) { break; }
+if(iter > 0)
+{
     var n=3;
     var m=3;
     Random rng = new Random(seed);
@@ -136,6 +137,7 @@
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
             v[iter] += A[i, j] * _y[iter, j] * _x[iter, i];}}
+}
 }
     google.setOnLoadCallback(drawChart1);
     google.setOnLoadCallback(drawChart2);
