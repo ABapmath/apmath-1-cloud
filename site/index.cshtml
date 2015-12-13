@@ -133,27 +133,27 @@
 
       function drawChart1() {
 
-      var data_A = new google.visualization.DataTable();
-      data_A.addColumn('number', 'y1');
-      data_A.addColumn('number', 'y2');
-      data_A.addColumn('number', 'y3');
-      data_A.addRows([
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'y1');
+      data.addColumn('number', 'y2');
+      data.addColumn('number', 'y3');
+      data.addRows([
         [@A[0,0], @A[0,1], @A[0,2]],
         [@A[1,0], @A[1,1], @A[1,2]],
         [@A[2,0], @A[2,1], @A[2,2]]
       ]);
 
-	var options_A = {'title':'',
+	var options = {'title':'',
                      'width':400,
                      'height':400};
 
-        var chart_A = new google.visualization.Table(document.getElementById('chart_A_div'));
-        chart_A.draw(data_A, options_A);
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
       }
     </script>
   </head>
 
   <body>
-    <div id="chart_A_div"></div>
+    <div id="chart_div"></div>
   </body>
 </html>
