@@ -7,10 +7,16 @@
 	var errorMssage = "no seed and/or number of iterations provided, please input http://apmath-1-cloud.azurewebsites.net?seed=5&iter=5";
 }
 <html>
-  <head>
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.charts.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
+  </script>
+  <title>Braun-Robinson</title>
+</head>
+<body>
+<script type="text/javascript">
 @if(!clear){
 	Response.Write(String.Format("alert({0});", errorMssage));
 }
@@ -127,33 +133,106 @@
         for (int j = 0; j < n; j++){
             v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
 }
-      google.load('visualization', '1.0', {'packages':['corechart', 'table']});
-
-      google.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'y1');
-      data.addColumn('number', 'y2');
-      data.addColumn('number', 'y3');
-      data.addRows([
-        [parseFloat('@A[0,0]'), parseFloat('@A[0,1]'), parseFloat('@A[0,2]')],
-        [parseFloat('@A[1,0]'), parseFloat('@A[1,1]'), parseFloat('@A[1,2]')],
-        [parseFloat('@A[2,0]'), parseFloat('@A[2,1]'), parseFloat('@A[2,2]')]
+    google.charts.setOnLoadCallback(drawChart1);
+    google.charts.setOnLoadCallback(drawChart2);
+    google.charts.setOnLoadCallback(drawChart3);
+function drawChart1() {
+      var data_A = new google.visualization.DataTable();
+      data_A.addColumn('number', 'y1');
+      data_A.addColumn('number', 'y2');
+      data_A.addColumn('number', 'y3');
+      data_A.addRows([
+        [@A[0,0], @A[0,1], @A[0,2]],
+        [@A[1,0], @A[1,1], @A[1,2]],
+        [@A[2,0], @A[2,1], @A[2,2]]
       ]);
-
-	var options = {'title':'',
+	var options_A = {'title':'Data',
                      'width':400,
                      'height':400};
-
-        var chart = new google.visualization.Table(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-  </head>
-
-  <body>
-    <div id="chart_div"></div>
-  </body>
+      var chart_A = new google.visualization.Table(document.getElementById('chart_A_div'));
+      chart_A.draw(data_A, options_A);
+}
+function drawChart2() {
+      var data_ras = new google.visualization.DataTable();
+      data_ras.addColumn('string', 'Iteration');
+      data_ras.addColumn('number', '1');
+      data_ras.addColumn('number', '2');
+      data_ras.addColumn('number', '3');
+      data_ras.addRows([
+@for(var i = 0; i < iter; i++)
+{
+    <text>
+    ['@i.ToString() x'
+    @for(var j = 0; j < m; j++)
+    {
+        <text>
+        , @_x[i, j]
+        </text>
+    }
+    ],
+    ['@i.ToString() y'
+    @for(var j = 0; j < n; j++)
+    {
+        <text>
+        , @_y[i, j]
+        </text>
+    }
+    ],
+    </text>
+}
+    ['@count.ToString() x'
+    @for(var j = 0; j < m; j++)
+    {
+        <text>
+        , @_x[count, j]
+        </text>
+    }
+    ],
+    ['@count.ToString() y'
+    @for(var j = 0; j < n; j++)
+    {
+        <text>
+        , @_y[count, j]
+        </text>
+    }
+    ]
+      ]);
+      var options_ras = {
+        width: 700,
+        height: 400,
+        legend: { position: 'top', maxLines: 1 },
+        bar: { groupWidth: '75%' },
+        isStacked: 'relative',
+      };
+      var chart_ras = new google.visualization.ColumnChart(document.getElementById('chart_ras_div'));
+      chart_ras.draw(data_ras, options_ras);
+}
+function drawChart3() {
+      var data_vs = new google.visualization.DataTable();
+      data_vs.addColumn('number', 'Iteration');
+      data_vs.addColumn('number', 'Value');
+      data_vs.addRows([
+@for(var i = 0; i < iter; i++)
+{
+    <text>
+    [@i, @v[i]],
+    </text>
+}
+    [@count, @v[count]]
+      ]);
+      var options_vs = {
+        chart: {
+          title: 'Estimated values'
+        },
+        width: 700,
+        height: 400
+      };
+      var chart_vs = new google.charts.Line(document.getElementById('chart_vs_div'));
+      chart_vs.draw(data_vs, options_vs);
+}
+</script>
+<DIV id="chart_A_div" style="width: 400px; height: 400px"></DIV>
+<DIV id="chart_ras_div" style="width: 700px; height: 400px"></DIV>
+<DIV id="chart_vs_div" style="width: 700px; height: 400px"></DIV>
+</body>
 </html>
