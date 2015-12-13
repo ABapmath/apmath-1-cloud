@@ -128,7 +128,7 @@
         for (int j = 0; j < n; j++){
             v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
 }
-    google.charts.setOnLoadCallback(drawChart1);
+    google.setOnLoadCallback(drawChart1);
 function drawChart1() {
       var data_A = new google.visualization.DataTable();
       data_A.addColumn('number', 'y1');
