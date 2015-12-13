@@ -1,9 +1,10 @@
 <html>
 <head>
+  <meta charset="UTF-8">
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script type="text/javascript">
-    google.charts.load('visualization', '1.0', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart1);
+    google.load('visualization', '1.0', { 'packages': ['corechart'] });
+    google.setOnLoadCallback(drawChart1);
 function drawChart1() {
       var data_A = new google.visualization.DataTable();
       data_A.addColumn('number', 'y1');
