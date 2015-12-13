@@ -122,13 +122,13 @@
     }
 
     for (int i = 0; i < m; i++){
-        _x[count, i] = kx[i] / (double)count;}
+        _x[iter, i] = kx[i] / (double)count;}
     for (int j = 0; j < n; j++){
-        _y[count, j] = ky[j] / (double)count;}
-    v[count] = 0;
+        _y[iter, j] = ky[j] / (double)count;}
+    v[iter] = 0;
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
-            v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
+            v[iter] += A[i, j] * _y[iter, j] * _x[iter, i];}}
 }
     google.setOnLoadCallback(drawChart1);
     google.setOnLoadCallback(drawChart2);
@@ -181,7 +181,7 @@ function drawChart2() {
     @for(var j = 0; j < m; j++)
     {
         <text>
-        , @_x[count, j]
+        , @_x[iter, j]
         </text>
     }
     ],
@@ -189,7 +189,7 @@ function drawChart2() {
     @for(var j = 0; j < n; j++)
     {
         <text>
-        , @_y[count, j]
+        , @_y[iter, j]
         </text>
     }
     ]
@@ -215,7 +215,7 @@ function drawChart3() {
     [@i, @v[i]],
     </text>
 }
-    [@count, @v[count]]
+    [@iter, @v[iter]]
       ]);
       var options_vs = {
         'title':'Estimated values',
