@@ -27,18 +27,6 @@ function drawChart1() {
       chart_A.draw(data_A, options_A);
 }
 </script>
-<TABLE BORDER>
-    @for(var i = 0; i < 3; i++)
-    {
-        <TR>
-        @for(var j = 0; j < 3; j++)
-        {
-            string temp = A[i, j].ToString();
-            <TD>@temp</TD>
-        }
-        </TR>
-    }
-</TABLE>
 <DIV id="chart_A_div" style="width: 400px; height: 400px"></DIV>
 </body>
 </html>
