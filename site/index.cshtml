@@ -1,234 +1,30 @@
-@{
-	var seedRequest = Request.Params["seed"];
-	var iterRequest = Request.Params["iter"];
-	var seed = 1;
-	var iter = 1;
-	var clear = int.TryParse(seedRequest, out seed) && int.TryParse(iterRequest, out iter);
-	var errorMssage = "no seed and/or number of iterations provided, please input http://apmath-1-cloud.azurewebsites.net?seed=5&iter=5";
-}
 <html>
 <head>
   <meta charset="utf-8">
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script type="text/javascript">
-    google.charts.load('visualization', '1.0', {'packages': ['corechart']});
+    google.charts.load('visualization', '1.0', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart1);
   </script>
   <title>Braun-Robinson</title>
 </head>
 <body>
 <script type="text/javascript">
-@if(!clear){
-	Response.Write(String.Format("alert({0});", errorMssage));
-}
-@{
-    var n=3;
-    var m=3;
-    Random rng = new Random(seed);
-	var A = new double[m, n];
-	for(int i=0;i<m;i++){
-		for(int j=0;j<n;j++)
-		{
-			double t;
-           	A[i, j] = rng.NextDouble() * 20.0;
-		}
-	}
-
-    var count = 1;
-
-    var max_x = new double[m];
-    var min_y = new double[n];
-
-    var kx = new int[m];
-    var ky = new int[n];
-
-    var _x = new double[iter + 1, m];
-    var _y = new double[iter + 1, n];
-    var v = new double[iter + 1];
-    v[0] = A[0, 0];
-
-    kx[0] = 1;
-    _x[0, 0] = 1;
-    ky[0] = 1;
-    _y[0, 0] = 1;
-    for (int i = 1; i < m; i++)
-    {
-        kx[i] = 0;
-        _x[0, i] = 0;
-    }
-    for (int i = 1; i < n; i++)
-    {
-        ky[i] = 0;
-        _y[0, i] = 0;
-    }
-
-
-    while (count < iter)
-    {
-        for (int j = 0; j < n; j++){
-            _y[count, j] = ky[j] / (double)count;
-	   }
-        for (int i = 0; i < m; i++)
-        {
-            double sum_x = 0;
-            for (int j = 0; j < n; j++)
-            {
-                sum_x += A[i, j] * _y[count, j];
-            }
-            max_x[i] = sum_x;
-        }
-
-        int x = 0;
-        double max = max_x[0];
-        for (int i = 1; i < m; i++)
-        {
-            if (max < max_x[i])
-            {
-                max = max_x[i];
-                x = i;
-            }
-        }
-
-
-        for (int i = 0; i < m; i++){
-            _x[count, i] = kx[i] / (double)count;
-	   }
-        for (int j = 0; j < n; j++)
-        {
-            double sum_y = 0;
-            for (int i = 0; i < m; i++)
-            {
-                sum_y += A[i, j] * _x[count, i];
-            }
-            min_y[j] = sum_y;
-        }
-
-        int y = 0;
-        double min = min_y[0];
-        for (int j = 1; j < n; j++)
-        {
-            if (min > min_y[j])
-            {
-                min = min_y[j];
-                y = j;
-            }
-        }
-
-        v[count] = 0;
-        for (int i = 0; i < m; i++){
-            for (int j = 0; j < n; j++){
-                v[count] += A[i, j] * _y[count, j] * _x[count, i];
-		 }
-	   }
-        count++;
-        kx[x]++;
-        ky[y]++;
-    }
-
-    for (int i = 0; i < m; i++){
-        _x[count, i] = kx[i] / (double)count;}
-    for (int j = 0; j < n; j++){
-        _y[count, j] = ky[j] / (double)count;}
-    v[count] = 0;
-    for (int i = 0; i < m; i++){
-        for (int j = 0; j < n; j++){
-            v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
-}
-    google.charts.setOnLoadCallback(drawChart1);
-    google.charts.setOnLoadCallback(drawChart2);
-    google.charts.setOnLoadCallback(drawChart3);
 function drawChart1() {
       var data_A = new google.visualization.DataTable();
       data_A.addColumn('number', 'y1');
       data_A.addColumn('number', 'y2');
       data_A.addColumn('number', 'y3');
       data_A.addRows([
-        [@A[0,0], @A[0,1], @A[0,2]],
-        [@A[1,0], @A[1,1], @A[1,2]],
-        [@A[2,0], @A[2,1], @A[2,2]]
+        [1, 2, 3],
+        [3, 2, 1],
+        [2, 1, 3]
       ]);
 	var options_A = {'title':'Data',
                      'width':400,
                      'height':400};
       var chart_A = new google.visualization.Table(document.getElementById('chart_A_div'));
       chart_A.draw(data_A, options_A);
-}
-function drawChart2() {
-      var data_ras = new google.visualization.DataTable();
-      data_ras.addColumn('string', 'Iteration');
-      data_ras.addColumn('number', '1');
-      data_ras.addColumn('number', '2');
-      data_ras.addColumn('number', '3');
-      data_ras.addRows([
-@for(var i = 0; i < iter; i++)
-{
-    <text>
-    ['@i.ToString() x'
-    @for(var j = 0; j < m; j++)
-    {
-        <text>
-        , @_x[i, j]
-        </text>
-    }
-    ],
-    ['@i.ToString() y'
-    @for(var j = 0; j < n; j++)
-    {
-        <text>
-        , @_y[i, j]
-        </text>
-    }
-    ],
-    </text>
-}
-    ['@count.ToString() x'
-    @for(var j = 0; j < m; j++)
-    {
-        <text>
-        , @_x[count, j]
-        </text>
-    }
-    ],
-    ['@count.ToString() y'
-    @for(var j = 0; j < n; j++)
-    {
-        <text>
-        , @_y[count, j]
-        </text>
-    }
-    ]
-      ]);
-      var options_ras = {
-        width: 700,
-        height: 400,
-        legend: { position: 'top', maxLines: 1 },
-        bar: { groupWidth: '75%' },
-        isStacked: 'relative',
-      };
-      var chart_ras = new google.visualization.ColumnChart(document.getElementById('chart_ras_div'));
-      chart_ras.draw(data_ras, options_ras);
-}
-function drawChart3() {
-      var data_vs = new google.visualization.DataTable();
-      data_vs.addColumn('number', 'Iteration');
-      data_vs.addColumn('number', 'Value');
-      data_vs.addRows([
-@for(var i = 0; i < iter; i++)
-{
-    <text>
-    [@i, @v[i]],
-    </text>
-}
-    [@count, @v[count]]
-      ]);
-      var options_vs = {
-        chart: {
-          title: 'Estimated values'
-        },
-        width: 700,
-        height: 400
-      };
-      var chart_vs = new google.charts.Line(document.getElementById('chart_vs_div'));
-      chart_vs.draw(data_vs, options_vs);
 }
 </script>
 <TABLE BORDER>
@@ -244,7 +40,5 @@ function drawChart3() {
     }
 </TABLE>
 <DIV id="chart_A_div" style="width: 400px; height: 400px"></DIV>
-<DIV id="chart_ras_div" style="width: 700px; height: 400px"></DIV>
-<DIV id="chart_vs_div" style="width: 700px; height: 400px"></DIV>
 </body>
 </html>
