@@ -12,7 +12,6 @@
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script type="text/javascript">
     google.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
-    google.setOnLoadCallback(drawChart1);
   </script>
   <title>Braun-Robinson</title>
 </head>
@@ -134,6 +133,7 @@
         for (int j = 0; j < n; j++){
             v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
 }
+    google.setOnLoadCallback(drawChart1);
 function drawChart1() {
       var data_A = new google.visualization.DataTable();
       data_A.addColumn('number', 'y1');
