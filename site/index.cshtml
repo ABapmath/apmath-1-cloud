@@ -134,8 +134,6 @@
             v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
 }
     google.charts.setOnLoadCallback(drawChart1);
-    google.charts.setOnLoadCallback(drawChart2);
-    google.charts.setOnLoadCallback(drawChart3);
 function drawChart1() {
       var data_A = new google.visualization.DataTable();
       data_A.addColumn('number', 'y1');
@@ -152,87 +150,7 @@ function drawChart1() {
       var chart_A = new google.visualization.Table(document.getElementById('chart_A_div'));
       chart_A.draw(data_A, options_A);
 }
-function drawChart2() {
-      var data_ras = new google.visualization.DataTable();
-      data_ras.addColumn('string', 'Iteration');
-      data_ras.addColumn('number', '1');
-      data_ras.addColumn('number', '2');
-      data_ras.addColumn('number', '3');
-      data_ras.addRows([
-@for(var i = 0; i < iter; i++)
-{
-    <text>
-    ['@i.ToString() x'
-    @for(var j = 0; j < m; j++)
-    {
-        <text>
-        , @_x[i, j]
-        </text>
-    }
-    ],
-    ['@i.ToString() y'
-    @for(var j = 0; j < n; j++)
-    {
-        <text>
-        , @_y[i, j]
-        </text>
-    }
-    ],
-    </text>
-}
-    ['@count.ToString() x'
-    @for(var j = 0; j < m; j++)
-    {
-        <text>
-        , @_x[count, j]
-        </text>
-    }
-    ],
-    ['@count.ToString() y'
-    @for(var j = 0; j < n; j++)
-    {
-        <text>
-        , @_y[count, j]
-        </text>
-    }
-    ]
-      ]);
-      var options_ras = {
-        width: 700,
-        height: 400,
-        legend: { position: 'top', maxLines: 1 },
-        bar: { groupWidth: '75%' },
-        isStacked: 'relative',
-      };
-      var chart_ras = new google.visualization.ColumnChart(document.getElementById('chart_ras_div'));
-      chart_ras.draw(data_ras, options_ras);
-}
-function drawChart3() {
-      var data_vs = new google.visualization.DataTable();
-      data_vs.addColumn('number', 'Iteration');
-      data_vs.addColumn('number', 'Value');
-      data_vs.addRows([
-@for(var i = 0; i < iter; i++)
-{
-    <text>
-    [@i, @v[i]],
-    </text>
-}
-    [@count, @v[count]]
-      ]);
-      var options_vs = {
-        chart: {
-          title: 'Estimated values'
-        },
-        width: 700,
-        height: 400
-      };
-      var chart_vs = new google.charts.Line(document.getElementById('chart_vs_div'));
-      chart_vs.draw(data_vs, options_vs);
-}
 </script>
-<DIV id="chart_A_div" style="width: 400px; height: 400px"></DIV>
-<DIV id="chart_ras_div" style="width: 700px; height: 400px"></DIV>
-<DIV id="chart_vs_div" style="width: 700px; height: 400px"></DIV>
+<div id="chart_A_div" style="width: 400px; height: 400px"></div>
 </body>
 </html>
