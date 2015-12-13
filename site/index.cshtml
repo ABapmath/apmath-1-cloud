@@ -13,7 +13,7 @@
   <script type="text/javascript">
     google.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
   </script>
-  <title>Braun-Robinson</title>
+  <title>Brown-Robinson</title>
 </head>
 <body>
   <script type="text/javascript">
@@ -23,7 +23,8 @@
 @{
     var n=3;
     var m=3;
-    Random rng = new Random(seed);
+    Random rng = new Random();
+    rng.setSeed(seed);
 	var A = new double[m, n];
 	for(int i=0;i<m;i++){
 		for(int j=0;j<n;j++)
