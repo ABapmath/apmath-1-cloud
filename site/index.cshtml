@@ -1,46 +1,161 @@
+@{
+	var seedRequest = Request.Params["seed"];
+	var iterRequest = Request.Params["iter"];
+	var seed = 1;
+	var iter = 1;
+	var clear = int.TryParse(seedRequest, out seed) && int.TryParse(iterRequest, out iter);
+	var errorMssage = "no seed and/or number of iterations provided, please input http://apmath-1-cloud.azurewebsites.net?seed=5&iter=5";
+}
 <html>
   <head>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
+@if(!clear){
+	Response.Write(String.Format("alert({0});", errorMssage));
+}
+@{
+    var n=3;
+    var m=3;
+    Random rng = new Random(seed);
+	var A = new double[m, n];
+	for(int i=0;i<m;i++){
+		for(int j=0;j<n;j++)
+		{
+			double t;
+           	A[i, j] = rng.NextDouble() * 20.0;
+		}
+	}
 
-      // Load the Visualization API and the piechart package.
+    var count = 1;
+
+    var max_x = new double[m];
+    var min_y = new double[n];
+
+    var kx = new int[m];
+    var ky = new int[n];
+
+    var _x = new double[iter + 1, m];
+    var _y = new double[iter + 1, n];
+    var v = new double[iter + 1];
+    v[0] = A[0, 0];
+
+    kx[0] = 1;
+    _x[0, 0] = 1;
+    ky[0] = 1;
+    _y[0, 0] = 1;
+    for (int i = 1; i < m; i++)
+    {
+        kx[i] = 0;
+        _x[0, i] = 0;
+    }
+    for (int i = 1; i < n; i++)
+    {
+        ky[i] = 0;
+        _y[0, i] = 0;
+    }
+
+
+    while (count < iter)
+    {
+        for (int j = 0; j < n; j++){
+            _y[count, j] = ky[j] / (double)count;
+	   }
+        for (int i = 0; i < m; i++)
+        {
+            double sum_x = 0;
+            for (int j = 0; j < n; j++)
+            {
+                sum_x += A[i, j] * _y[count, j];
+            }
+            max_x[i] = sum_x;
+        }
+
+        int x = 0;
+        double max = max_x[0];
+        for (int i = 1; i < m; i++)
+        {
+            if (max < max_x[i])
+            {
+                max = max_x[i];
+                x = i;
+            }
+        }
+
+
+        for (int i = 0; i < m; i++){
+            _x[count, i] = kx[i] / (double)count;
+	   }
+        for (int j = 0; j < n; j++)
+        {
+            double sum_y = 0;
+            for (int i = 0; i < m; i++)
+            {
+                sum_y += A[i, j] * _x[count, i];
+            }
+            min_y[j] = sum_y;
+        }
+
+        int y = 0;
+        double min = min_y[0];
+        for (int j = 1; j < n; j++)
+        {
+            if (min > min_y[j])
+            {
+                min = min_y[j];
+                y = j;
+            }
+        }
+
+        v[count] = 0;
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                v[count] += A[i, j] * _y[count, j] * _x[count, i];
+		 }
+	   }
+        count++;
+        kx[x]++;
+        ky[y]++;
+    }
+
+    for (int i = 0; i < m; i++){
+        _x[count, i] = kx[i] / (double)count;}
+    for (int j = 0; j < n; j++){
+        _y[count, j] = ky[j] / (double)count;}
+    v[count] = 0;
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            v[count] += A[i, j] * _y[count, j] * _x[count, i];}}
+}
       google.load('visualization', '1.0', {'packages':['corechart']});
 
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawChart);
+      google.setOnLoadCallback(drawChart1);
+      google.setOnLoadCallback(drawChart2);
+      google.setOnLoadCallback(drawChart3);
 
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
+      function drawChart1() {
 
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
+      var data_A = new google.visualization.DataTable();
+      data_A.addColumn('number', 'y1');
+      data_A.addColumn('number', 'y2');
+      data_A.addColumn('number', 'y3');
+      data_A.addRows([
+        [@A[0,0], @A[0,1], @A[0,2]],
+        [@A[1,0], @A[1,1], @A[1,2]],
+        [@A[2,0], @A[2,1], @A[2,2]]
+      ]);
 
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
+	var options_A = {'title':'Data',
+                     'width':400,
+                     'height':400};
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
+        var chart_A = new google.visualization.Table(document.getElementById('chart_A_div'));
+        chart_A.draw(data_A, options_A);
       }
     </script>
   </head>
 
   <body>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+    <div id="chart_A_div"></div>
   </body>
 </html>
