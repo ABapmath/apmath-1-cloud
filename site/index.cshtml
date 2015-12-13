@@ -47,32 +47,29 @@
     v[0] = A[0, 0];
 
     kx[0] = 1;
-    _x[0, 0] = 1;
     ky[0] = 1;
-    _y[0, 0] = 1;
     for (int i = 1; i < m; i++)
     {
         kx[i] = 0;
-        _x[0, i] = 0;
     }
     for (int i = 1; i < n; i++)
     {
         ky[i] = 0;
-        _y[0, i] = 0;
     }
 
 
-    while (count < iter)
+    while (count <= iter)
     {
+	var count_ = count-1;
         for (int j = 0; j < n; j++){
-            _y[count, j] = ky[j] / (double)count;
+            _y[count_, j] = ky[j] / (double)count;
 	   }
         for (int i = 0; i < m; i++)
         {
             double sum_x = 0;
             for (int j = 0; j < n; j++)
             {
-                sum_x += A[i, j] * _y[count, j];
+                sum_x += A[i, j] * _y[count_, j];
             }
             max_x[i] = sum_x;
         }
@@ -90,14 +87,14 @@
 
 
         for (int i = 0; i < m; i++){
-            _x[count, i] = kx[i] / (double)count;
+            _x[count_, i] = kx[i] / (double)count;
 	   }
         for (int j = 0; j < n; j++)
         {
             double sum_y = 0;
             for (int i = 0; i < m; i++)
             {
-                sum_y += A[i, j] * _x[count, i];
+                sum_y += A[i, j] * _x[count_, i];
             }
             min_y[j] = sum_y;
         }
@@ -113,10 +110,10 @@
             }
         }
 
-        v[count] = 0;
+        v[count_] = 0;
         for (int i = 0; i < m; i++){
             for (int j = 0; j < n; j++){
-                v[count] += A[i, j] * _y[count, j] * _x[count, i];
+                v[count_] += A[i, j] * _y[count_, j] * _x[count_, i];
 		 }
 	   }
         count++;
