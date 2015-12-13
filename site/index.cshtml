@@ -1,32 +1,54 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript">
-    google.load('visualization', '1.0', { 'packages': ['corechart'] });
-    google.setOnLoadCallback(drawChart1);
-function drawChart1() {
-      var data_A = new google.visualization.DataTable();
-      data_A.addColumn('number', 'y1');
-      data_A.addColumn('number', 'y2');
-      data_A.addColumn('number', 'y3');
-      data_A.addRows([
-        [1, 2, 3],
-        [3, 2, 1],
-        [2, 1, 3]
-      ]);
-	var options_A = {'title':'Data',
-                     'width':400,
-                     'height':400};
-      var chart_A = new google.visualization.Table(document.getElementById('chart_A_div'));
-      chart_A.draw(data_A, options_A);
-}
-  </script>
-  <title>Braun-Robinson</title>
+	<meta charset="UTF-8">
+	<title>Google Charts</title>
+	
+	<!-- Загрузка AJAX API -->
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+	
+		// Загрузить API визуализации.
+		google.load('visualization', '1.0', {'packages': ['corechart'] });
+		
+		// Установка функции обратного вызова для запуска отрисовки,
+		// по окончанию загрузки API визуализации.
+		google.setOnLoadCallback(drawChart);
+		
+		// Функция, которая создает круговую диаграмму,
+		// заполняет таблицу данными и отрисовывает их.
+		function drawChart() {
+		
+			// Создание таблицы данных.
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Topping');
+			data.addColumn('number', 'Slices');
+			data.addRows([
+				['Mushrooms', 3],
+				['Onions', 10],
+				['Olives', 1],
+				['Zucchini', 1],
+				['Pepperoni', 2]
+			]);
+			
+			// Установка опций для диаграммы.
+			var options = {
+				'title': 'How Much Pizza I Ate Last Night',
+				'width': 500,
+				'height': 500,
+				'is3D': true
+			};
+			
+			// Инициирование и отрисовка диаграммы, передавая некоторые параметры.
+			var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		}
+	</script>
 </head>
 <body>
-<script type="text/javascript">
-</script>
-<DIV id="chart_A_div" style="width: 400px; height: 400px"></DIV>
+
+	<!-- div, который будет содержать круговую диаграмму -->
+	<div id="chart_div"></div>
+	
 </body>
 </html>
