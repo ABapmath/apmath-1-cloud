@@ -12,6 +12,11 @@
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script type="text/javascript">
     google.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
+  </script>
+  <title>Braun-Robinson</title>
+</head>
+<body>
+  <script type="text/javascript">
 @if(!clear){
 	Response.Write(String.Format("alert({0});", errorMssage));
 }
@@ -146,9 +151,6 @@ function drawChart1() {
       chart_A.draw(data_A, options_A);
 }
   </script>
-  <title>Braun-Robinson</title>
-</head>
-<body>
 <div id="chart_A_div" style="width: 400px; height: 400px"></div>
 </body>
 </html>
