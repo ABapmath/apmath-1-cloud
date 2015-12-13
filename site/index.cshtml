@@ -25,6 +25,7 @@
 @if(iter < 1){
 	Response.Write(String.Format("alert({0});", errorMs));
 	<text>/*</text>
+	return;
 }
 @{
     var n=3;
@@ -63,9 +64,6 @@
         ky[i] = 0;
     }
 
-
-if(iter > 0)
-{
     while (count <= iter)
     {
 	var count_ = count-1;
@@ -137,7 +135,6 @@ if(iter > 0)
     for (int i = 0; i < m; i++){
         for (int j = 0; j < n; j++){
             v[iter] += A[i, j] * _y[iter, j] * _x[iter, i];}}
-}
 }
     google.setOnLoadCallback(drawChart1);
     google.setOnLoadCallback(drawChart2);
